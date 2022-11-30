@@ -15,18 +15,10 @@
     height: 100vh;
     text-align: center;
 }
-
-.start-btn {
-    padding: 15px;
-    border-radius: 7px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    background-color: #38E54D;
-}
 /* = = = = = = = = = = = = = = = = = = */
 /* GAME START                          */
 /* = = = = = = = = = = = = = = = = = = */
-.game-screen.hidden, .title-screen.hidden {
+.hidden {
     display: none;
 }
 
