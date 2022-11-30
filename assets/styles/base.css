@@ -79,3 +79,11 @@ input[type=button], input[type=submit], input[type=clear], input[type=radio], bu
 /*-------------------------------------------*/
 /* BASIC ELEMENT STYLES                      */
 /*-------------------------------------------*/
+input[type=text] {
+    width: 250px;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    color: #FFF;
+    background-color: rgba(0,0,0,0.5);
+}
