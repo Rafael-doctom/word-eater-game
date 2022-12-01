@@ -96,3 +96,10 @@ input[type=text] {
     font-weight: 700;
     background-color: #3CCF4E;
 }
+
+.leaderboard-btn {
+  position: fixed;
+  right: 5%;
+  top: 5%;
+  background-color: #009EFF;
+}

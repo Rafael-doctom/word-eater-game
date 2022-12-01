@@ -1,20 +1,25 @@
 'use strict';
+import {Score} from "./Score.js";
 
 // ELEMENTS BRIDGE
-// SCREENS
+// SCREENS AND BUTTONS
 const titleScreen = document.querySelector('.title-screen');
 const startBtn = document.querySelector('.start-btn');
 const playAgainBtn = document.querySelector('.play-again-btn');
+const leaderboardBtn = document.querySelector('.leaderboard-btn');
 const gameScreen = document.querySelector('.game-screen');
 
+// INPUTS, DISPLAYS, MODALS
 const timeDisplay = document.querySelector('.time-display');
 const pointsDisplay = document.querySelector('.points-display');
 const wordDisplay = document.querySelector('.word-display');
 const userInput = document.querySelector('.user-input');
+const leaderboardModal = document.querySelector('.leaderboard-modal');
 
+// CREATURE
 const creatureBody = document.querySelector('.creature-body');
 const creatureFace = document.querySelector('.creature-face');
-
+const leaderboard = [];
 
 // WORD ARRAY
 const words = [
@@ -34,11 +39,11 @@ const words = [
     'keyboard', 'window'
 ];
 
-// RANDOMIZING ARRAY
+// GETTING RANDOM WORDS
 function randomizer(array) {
-    for(let i = 1; i < array.length; i++) {
-        array[i] = Math.floor(Math.random() * array.length);
-        return array[array[i]];
+    for(let i = 0; i <= array.length; i++) {
+        let randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
     }
 }
 
@@ -47,7 +52,7 @@ startBtn.addEventListener('click', () => {
     let word = randomizer(words);
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 100;
+    let timeLeft = 10;
     let points = 0;
 
     gameScreen.classList.remove('hidden');
@@ -57,7 +62,27 @@ startBtn.addEventListener('click', () => {
 
     // PLAYING MUSIC
     const music = new Audio('assets/media/game-music.mp3');
+    const eating = new Audio('assets/media/eating.mp3')
     music.play();
+
+    // CHECKING INPUT FOR MATCHES
+    userInput.addEventListener('keyup', () => {
+        if(userInput.value == word) {
+            userInput.style.border = 'thick solid green';
+            pointsDisplay.innerText = `Words eaten: ${points += 1}`;
+            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
+            userInput.value = '';
+            creatureBody.style.width = `${bodySize += 2}px`;
+            creatureBody.style.height = `${bodySize += 2}px`;
+            creatureFace.style.width = `${faceSize += 2}px`;
+            creatureFace.style.height = `${faceSize += 2}px`;
+            creatureFace.src = 'assets/media/heart-eating.png';
+            eating.play();
+        } else {
+            userInput.style.border = 'thick solid red';
+            creatureFace.src = 'assets/media/heart.png';
+        }
+    });
 
     // RUNNING TIMER
     const timer = setInterval(() => {
@@ -65,11 +90,23 @@ startBtn.addEventListener('click', () => {
 
         if(timeLeft == 0) {
             timeDisplay.innerText = 'Time\'s up';
-            pointsDisplay.innerText = `You have fed me: ${points += 1} words`;
+            pointsDisplay.innerText = `You have fed me: ${points} words`;
             wordDisplay.classList.add('hidden');
             userInput.classList.add('hidden');
             playAgainBtn.classList.remove('hidden');
-            
+            leaderboardBtn.classList.remove('hidden');
+
+            // NEW SCORE
+            let percentage = points/90;
+            const date = new Date();
+            const score = new Score(date.toString().substring(0, 15), points, percentage.toPrecision(1));
+
+            // DIPLAYING LEADERBOARD MODAL
+            leaderboardBtn.addEventListener('click', () => {
+                leaderboardModal.classList.remove('hidden');
+                leaderboardModal.innerHTML = score.stats;
+            });
+
             // PICKING REACTION FOR CREATURE
             if(points <= 10) {
                 creatureFace.src = 'assets/media/heart-sad.png';
@@ -86,25 +123,9 @@ startBtn.addEventListener('click', () => {
             clearInterval(timer);
         }
     }, 1000);
-
-    // CHECKING INPUT FOR MATCHES
-    userInput.addEventListener('keyup', () => {
-        if(userInput.value == word) {
-            userInput.style.border = 'thick solid green';
-            pointsDisplay.innerText = `Words eaten: ${points += 1}`;
-            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
-            userInput.value = '';
-            creatureBody.style.width = `${bodySize += 2}px`;
-            creatureBody.style.height = `${bodySize += 2}px`;
-            creatureFace.style.width = `${faceSize += 2}px`;
-            creatureFace.style.height = `${faceSize += 2}px`;
-            creatureFace.src = 'assets/media/heart-eating.png';
-        } else {
-            userInput.style.border = 'thick solid red';
-            creatureFace.src = 'assets/media/heart.png';
-        }
-    });
 });
+
+
 
 // PLAY AGAIN
 playAgainBtn.addEventListener('click', () => {
@@ -112,13 +133,15 @@ playAgainBtn.addEventListener('click', () => {
     wordDisplay.classList.remove('hidden');
     userInput.classList.remove('hidden');
     playAgainBtn.classList.add('hidden');
+    leaderboardBtn.classList.add('hidden');
+    leaderboardModal.classList.add('hidden');
 
     let word = randomizer(words);
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 100;
+    let timeLeft = 10;
     let points = 0;
-    
+
     timeDisplay.innerText = `You have ${timeLeft} seconds to feed me!`;
     pointsDisplay.innerText = 'Words eaten: ';
     wordDisplay.innerText = `Your word is: ${word}`;
@@ -131,18 +154,50 @@ playAgainBtn.addEventListener('click', () => {
 
     // PLAYING MUSIC
     const music = new Audio('assets/media/game-music.mp3');
+    const eating = new Audio('assets/media/eating.mp3')
     music.play();
 
-    // RUNNING TIMER
-    const timer = setInterval(() => {
+    // CHECKING INPUT FOR MATCHES
+    userInput.addEventListener('keyup', () => {
+        if(userInput.value == word) {
+            userInput.style.border = 'thick solid green';
+            pointsDisplay.innerText = `Words eaten: ${points += 1}`;
+            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
+            userInput.value = '';
+            creatureBody.style.width = `${bodySize += 2}px`;
+            creatureBody.style.height = `${bodySize += 2}px`;
+            creatureFace.style.width = `${faceSize += 2}px`;
+            creatureFace.style.height = `${faceSize += 2}px`;
+            creatureFace.src = 'assets/media/heart-eating.png';
+            eating.play();
+        } else {
+            userInput.style.border = 'thick solid red';
+            creatureFace.src = 'assets/media/heart.png';
+        }
+    });   
+
+     // RUNNING TIMER
+     const timer = setInterval(() => {
         timeDisplay.innerText = `You have ${--timeLeft} seconds to feed me!`;
 
         if(timeLeft == 0) {
-            timeDisplay.innerText = 'GAME OVER :(';
-            pointsDisplay.innerText = `You have fed me: ${points += 1} words`;
+            timeDisplay.innerText = 'Time\'s up';
+            pointsDisplay.innerText = `You have fed me: ${points} words`;
             wordDisplay.classList.add('hidden');
             userInput.classList.add('hidden');
             playAgainBtn.classList.remove('hidden');
+            leaderboardBtn.classList.remove('hidden');
+
+             // NEW SCORE
+             let percentage = points/90;
+             const date = new Date();
+             const score = new Score(date.toString().substring(0, 15), points, percentage.toPrecision(1));
+ 
+             // DIPLAYING LEADERBOARD MODAL
+             leaderboardBtn.addEventListener('click', () => {
+                 leaderboardModal.classList.remove('hidden');
+                 leaderboardModal.innerHTML = score.stats;
+             });
 
             // PICKING REACTION FOR CREATURE
             if(points <= 10) {
@@ -160,24 +215,8 @@ playAgainBtn.addEventListener('click', () => {
             clearInterval(timer);
         }
     }, 1000);
-
-    // CHECKING INPUT FOR MATCHES
-    userInput.addEventListener('keyup', () => {
-        if(userInput.value == word) {
-            userInput.style.border = 'thick solid green';
-            pointsDisplay.innerText = `Words eaten: ${points += 1}`;
-            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
-            userInput.value = '';
-            creatureBody.style.width = `${bodySize += 2}px`;
-            creatureBody.style.height = `${bodySize += 2}px`;
-            creatureFace.style.width = `${faceSize += 2}px`;
-            creatureFace.style.height = `${faceSize += 2}px`;
-            creatureFace.src = 'assets/media/heart-eating.png';
-        } else {
-            userInput.style.border = 'thick solid red';
-            creatureFace.src = 'assets/media/heart.png';
-        }
-    });   
 });
+
+
 
 
