@@ -6,11 +6,11 @@
         <meta name="author" content="Matthew Banuag">
         <meta name="description" content="My website portfolio">
         <meta name="keywords" content="Matthew Banuag, Website Portfolio, Personal Site">
-        <title>Final Project</title>
+        <title>Typography Eater</title>
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
         
         <!-- FONT AWESOME -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,17 +23,19 @@
         <main class="wrapper">
             <div class="title-screen">
                 <article>
-                    <h1>Type Hero</h1>
-                    <p>Typing game made with HTML, CSS, and JavaScript</p>
+                    <h1 class="game-title">Typography Eater</h1>
+                    <p class="game-intro">Feed the thing by typing out the words!</p>
                 </article>
 
                 <button class="buttons start-btn">Start Game</button>
            </div>
 
            <div class="game-screen hidden">
-                <h1>Game has started</h1>
                 <h1 class="time-display"></h1>
-                <h5 class="points-display">Points: </h5>
+                <figure class="creature-body bounce">
+                    <img src="assets/media/heart.png" alt="Heart" class="creature-face">
+                </figure>
+                <h4 class="points-display">Words eaten: </h4>
                 <h3 class="word-display">Word goes here</h3>
                 <form>
                     <input type="text" placeholder="Type the word" class="user-input">
