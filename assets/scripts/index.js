@@ -52,7 +52,7 @@ startBtn.addEventListener('click', () => {
     let word = randomizer(words);
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 10;
+    let timeLeft = 100;
     let points = 0;
 
     gameScreen.classList.remove('hidden');
@@ -90,16 +90,17 @@ startBtn.addEventListener('click', () => {
 
         if(timeLeft == 0) {
             timeDisplay.innerText = 'Time\'s up';
-            pointsDisplay.innerText = `You have fed me: ${points} words`;
+            pointsDisplay.innerText = `You fed me: ${points} words`;
             wordDisplay.classList.add('hidden');
             userInput.classList.add('hidden');
             playAgainBtn.classList.remove('hidden');
             leaderboardBtn.classList.remove('hidden');
 
             // NEW SCORE
-            let percentage = points/90;
+            let percentage = 100 * points;
+            percentage /= 90;
             const date = new Date();
-            const score = new Score(date.toString().substring(0, 15), points, percentage.toPrecision(1));
+            const score = new Score(date.toString().substring(0, 15), points, percentage.toFixed());
 
             // DIPLAYING LEADERBOARD MODAL
             leaderboardBtn.addEventListener('click', () => {
@@ -114,8 +115,10 @@ startBtn.addEventListener('click', () => {
                 creatureFace.src = 'assets/media/heart-bleh.png';
             } else if(points > 20 && points <= 35) {
                 creatureFace.src = 'assets/media/heart-satisfied.png';
-            } else {
+            } else if(points > 35) {
                 creatureFace.src = 'assets/media/heart-full.png';
+            } else {
+                creatureFace.src = 'assets/media/heart.png';
             }
 
             points = 0;
@@ -127,7 +130,7 @@ startBtn.addEventListener('click', () => {
 
 
 
-// PLAY AGAIN
+// PLAY AGAIN AND LOGIC
 playAgainBtn.addEventListener('click', () => {
     // RESETTING GAME
     wordDisplay.classList.remove('hidden');
@@ -139,7 +142,7 @@ playAgainBtn.addEventListener('click', () => {
     let word = randomizer(words);
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 10;
+    let timeLeft = 100;
     let points = 0;
 
     timeDisplay.innerText = `You have ${timeLeft} seconds to feed me!`;
@@ -182,22 +185,23 @@ playAgainBtn.addEventListener('click', () => {
 
         if(timeLeft == 0) {
             timeDisplay.innerText = 'Time\'s up';
-            pointsDisplay.innerText = `You have fed me: ${points} words`;
+            pointsDisplay.innerText = `You fed me: ${points} words`;
             wordDisplay.classList.add('hidden');
             userInput.classList.add('hidden');
             playAgainBtn.classList.remove('hidden');
             leaderboardBtn.classList.remove('hidden');
 
-             // NEW SCORE
-             let percentage = points/90;
-             const date = new Date();
-             const score = new Score(date.toString().substring(0, 15), points, percentage.toPrecision(1));
+            // NEW SCORE
+            let percentage = 100 * points;
+            percentage /= 90;
+            const date = new Date();
+            const score = new Score(date.toString().substring(0, 15), points, percentage.toFixed());
  
-             // DIPLAYING LEADERBOARD MODAL
-             leaderboardBtn.addEventListener('click', () => {
-                 leaderboardModal.classList.remove('hidden');
-                 leaderboardModal.innerHTML = score.stats;
-             });
+            // DIPLAYING LEADERBOARD MODAL
+            leaderboardBtn.addEventListener('click', () => {
+                leaderboardModal.classList.remove('hidden');
+                leaderboardModal.innerHTML = score.stats;
+            });
 
             // PICKING REACTION FOR CREATURE
             if(points <= 10) {
@@ -206,8 +210,10 @@ playAgainBtn.addEventListener('click', () => {
                 creatureFace.src = 'assets/media/heart-bleh.png';
             } else if(points > 20 && points <= 35) {
                 creatureFace.src = 'assets/media/heart-satisfied.png';
-            } else {
+            } else if(points > 35) {
                 creatureFace.src = 'assets/media/heart-full.png';
+            } else {
+                creatureFace.src = 'assets/media/heart.png';
             }
 
             points = 0;

@@ -43,6 +43,20 @@
     background: #000 url("../media/game-screen.gif") center center / cover no-repeat fixed;
 }
 
+.word-display, .points-display {
+    border-radius: 50px;
+}
+
+.points-display { 
+    padding: 10px;
+    background-color: #008793; 
+}
+
+.word-display { 
+    padding: 20px;
+    background-color: #00bf72; 
+}
+
 .creature-body {
     display: flex;
     justify-content: center;
@@ -76,5 +90,10 @@
     right: 5.5%;
     padding: 15px;
     border-radius: 5px;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.5);
 }
+
+.leaderboard-modal * {
+    text-align: justify;
+}
+

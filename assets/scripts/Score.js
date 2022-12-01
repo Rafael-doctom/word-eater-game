@@ -27,7 +27,7 @@ class Score {
         return `
             <h3>Your stats</h3>
             <p>${this.#date}</p>
-            <p>${this.#hits} words</p>
+            <p>You fed me ${this.#hits} words</p>
             <p>You typed ${this.#percentage}% of the 90 words</p>
         `;
     }
