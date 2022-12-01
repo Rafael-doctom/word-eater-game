@@ -11,5 +11,7 @@ Checkout the game [here](https://mattbanuag.github.io/word-eater-game/)
 
 ### Resources
 Icons used in this project are made by [iconixar](https://www.flaticon.com/authors/iconixar)
+
 GIFs used in this project found [here](https://giphy.com/)
+
 Music and SFX used in this project found [here](https://pixabay.com/music/)
