@@ -7,7 +7,7 @@ Feed the space blob by typing words. This is a simple typing game made with HTML
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
 ### Demo
-Checkout the project [here](https://mattbanuag.github.io/word-eater-game/) 
+Checkout the game [here](https://mattbanuag.github.io/word-eater-game/) 
 
 ### Resources
 Icons used in this project are made by [iconixar](https://www.flaticon.com/authors/iconixar)
