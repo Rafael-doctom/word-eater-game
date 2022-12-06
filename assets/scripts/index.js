@@ -57,8 +57,8 @@ startBtn.addEventListener('click', () => {
 
     gameScreen.classList.remove('hidden');
     titleScreen.classList.add('hidden');
-    wordDisplay.innerText = `Your word is: ${word}`;
-    timeDisplay.innerText = `You have ${timeLeft} seconds to feed me!`;
+    wordDisplay.innerText = word;
+    timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${timeLeft} seconds`;
 
     // PLAYING MUSIC
     const music = new Audio('assets/media/game-music.mp3');
@@ -70,7 +70,7 @@ startBtn.addEventListener('click', () => {
         if(userInput.value == word) {
             userInput.style.border = 'thick solid green';
             pointsDisplay.innerText = `Words eaten: ${points += 1}`;
-            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
+            wordDisplay.innerText = word = randomizer(words);
             userInput.value = '';
             creatureBody.style.width = `${bodySize += 2}px`;
             creatureBody.style.height = `${bodySize += 2}px`;
@@ -86,7 +86,7 @@ startBtn.addEventListener('click', () => {
 
     // RUNNING TIMER
     const timer = setInterval(() => {
-        timeDisplay.innerText = `You have ${--timeLeft} seconds to feed me!`;
+        timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${--timeLeft} seconds`;
 
         if(timeLeft == 0) {
             timeDisplay.innerText = 'Time\'s up';
@@ -145,9 +145,9 @@ playAgainBtn.addEventListener('click', () => {
     let timeLeft = 100;
     let points = 0;
 
-    timeDisplay.innerText = `You have ${timeLeft} seconds to feed me!`;
+    timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${timeLeft} seconds`;
     pointsDisplay.innerText = 'Words eaten: ';
-    wordDisplay.innerText = `Your word is: ${word}`;
+    wordDisplay.innerText = word;
     userInput.value = '';
     creatureFace.src = 'assets/media/heart.png';
     creatureBody.style.width = `${bodySize += 2}px`;
@@ -165,7 +165,7 @@ playAgainBtn.addEventListener('click', () => {
         if(userInput.value == word) {
             userInput.style.border = 'thick solid green';
             pointsDisplay.innerText = `Words eaten: ${points += 1}`;
-            wordDisplay.innerText = `Your word is: ${word = randomizer(words)}`;
+            wordDisplay.innerText = word = randomizer(words);
             userInput.value = '';
             creatureBody.style.width = `${bodySize += 2}px`;
             creatureBody.style.height = `${bodySize += 2}px`;
@@ -181,7 +181,7 @@ playAgainBtn.addEventListener('click', () => {
 
      // RUNNING TIMER
      const timer = setInterval(() => {
-        timeDisplay.innerText = `You have ${--timeLeft} seconds to feed me!`;
+        timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${--timeLeft} seconds`;
 
         if(timeLeft == 0) {
             timeDisplay.innerText = 'Time\'s up';
