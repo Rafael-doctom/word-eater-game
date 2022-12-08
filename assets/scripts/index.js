@@ -57,6 +57,7 @@ function startGame() {
 
     gameScreen.classList.remove('hidden');
     titleScreen.classList.add('hidden');
+    pointsDisplay.innerText = 'Words eaten: 0';
     wordDisplay.innerText = word;
     timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${timeLeft} seconds`;
 
@@ -141,83 +142,17 @@ playAgainBtn.addEventListener('click', () => {
     playAgainBtn.classList.add('hidden');
     leaderboardBtn.classList.add('hidden');
     leaderboardModal.classList.add('hidden');
-    let word = randomizer(words);
+
+    // RESETTING CREATURE ATTRIBUTES
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 100;
-    let points = 0;
+    creatureBody.style.width = `${bodySize}px`;
+    creatureBody.style.height = `${bodySize}px`;
+    creatureFace.style.width = `${faceSize}px`;
+    creatureFace.style.height = `${faceSize}px`;
+    creatureFace.src = 'assets/media/heart.png';
 
-    gameScreen.classList.remove('hidden');
-    titleScreen.classList.add('hidden');
-    wordDisplay.innerText = word;
-    timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${timeLeft} seconds`;
-
-    // PLAYING MUSIC
-    const music = new Audio('assets/media/game-music.mp3');
-    const eating = new Audio('assets/media/eating.mp3')
-    music.play();
-
-    // CHECKING INPUT FOR MATCHES
-    userInput.addEventListener('keyup', () => {
-        if(userInput.value == word) {
-            userInput.style.border = 'thick solid green';
-            pointsDisplay.innerText = `Words eaten: ${points += 1}`;
-            wordDisplay.innerText = word = randomizer(words);
-            userInput.value = '';
-            creatureBody.style.width = `${bodySize += 2}px`;
-            creatureBody.style.height = `${bodySize += 2}px`;
-            creatureFace.style.width = `${faceSize += 2}px`;
-            creatureFace.style.height = `${faceSize += 2}px`;
-            creatureFace.src = 'assets/media/heart-eating.png';
-            eating.play();
-        } else {
-            userInput.style.border = 'thick solid red';
-            creatureFace.src = 'assets/media/heart.png';
-        }
-    });
-
-    // RUNNING TIMER
-    const timer = setInterval(() => {
-        timeDisplay.innerHTML = `<i class="fa-solid fa-clock"></i> ${--timeLeft} seconds`;
-
-        if(timeLeft == 0) {
-            timeDisplay.innerText = 'Time\'s up';
-            pointsDisplay.innerText = `You fed me: ${points} words`;
-            wordDisplay.classList.add('hidden');
-            userInput.classList.add('hidden');
-            playAgainBtn.classList.remove('hidden');
-            leaderboardBtn.classList.remove('hidden');
-
-            // NEW SCORE
-            let percentage = 100 * points;
-            percentage /= 90;
-            const date = new Date();
-            const score = new Score(date.toString().substring(0, 15), points, percentage.toFixed());
-
-            // DIPLAYING LEADERBOARD MODAL
-            leaderboardBtn.addEventListener('click', () => {
-                leaderboardModal.classList.remove('hidden');
-                leaderboardModal.innerHTML = score.stats;
-            });
-
-            // PICKING REACTION FOR CREATURE
-            if(points <= 10) {
-                creatureFace.src = 'assets/media/heart-sad.png';
-            } else if(points > 10 && points <= 20) {
-                creatureFace.src = 'assets/media/heart-bleh.png';
-            } else if(points > 20 && points <= 35) {
-                creatureFace.src = 'assets/media/heart-satisfied.png';
-            } else if(points > 35) {
-                creatureFace.src = 'assets/media/heart-full.png';
-            } else {
-                creatureFace.src = 'assets/media/heart.png';
-            }
-
-            points = 0;
-            music.pause();
-            clearInterval(timer);
-        }
-    }, 1000);
+    startGame();
 });
 
 
