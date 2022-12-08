@@ -24,12 +24,7 @@ class Score {
     }
 
     get stats() {
-        return `
-            <h3>Your stats</h3>
-            <p>${this.#date}</p>
-            <p>You fed me ${this.#hits} words</p>
-            <p>You typed ${this.#percentage}% of the 90 words</p>
-        `;
+        return `${this.#hits} words, `;
     }
 }
 

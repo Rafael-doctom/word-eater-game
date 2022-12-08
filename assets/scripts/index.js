@@ -1,5 +1,4 @@
 'use strict';
-import {Score} from "./Score.js";
 
 // ELEMENTS BRIDGE
 // SCREENS AND BUTTONS
@@ -15,11 +14,12 @@ const pointsDisplay = document.querySelector('.points-display');
 const wordDisplay = document.querySelector('.word-display');
 const userInput = document.querySelector('.user-input');
 const leaderboardModal = document.querySelector('.leaderboard-modal');
+const item = document.querySelector('.item');
 
 // CREATURE
 const creatureBody = document.querySelector('.creature-body');
 const creatureFace = document.querySelector('.creature-face');
-const leaderboard = [];
+let leaderboard = [];
 
 // WORD ARRAY
 const words = [
@@ -47,14 +47,26 @@ function randomizer(array) {
     }
 }
 
+// SAVING SCORE
+function saveScore(score) {
+   
+}
+
+// SAVING SCORE TO LOCAL STORAGE
+function addToStorage(score) {
+    leaderboard.push(score);
+    localStorage.setItem('Game', JSON.stringify(leaderboard)); 
+}
+
 // RUNNING THE GAME
 function startGame() {
     let word = randomizer(words);
     let bodySize = 80;
     let faceSize = 50;
-    let timeLeft = 100;
+    let timeLeft = 10;
     let points = 0;
 
+    userInput.value = '';
     gameScreen.classList.remove('hidden');
     titleScreen.classList.add('hidden');
     pointsDisplay.innerText = 'Words eaten: 0';
@@ -96,18 +108,35 @@ function startGame() {
             userInput.classList.add('hidden');
             playAgainBtn.classList.remove('hidden');
             leaderboardBtn.classList.remove('hidden');
-
+            console.clear();
             // NEW SCORE
             let percentage = 100 * points;
             percentage /= 90;
             const date = new Date();
-            const score = new Score(date.toString().substring(0, 15), points, percentage.toFixed());
+            const score = {
+                date: date.toString().substring(0, 15), 
+                points: points, 
+                percentage: percentage.toFixed()
+            };
+
+            // SAVE GAME
+            addToStorage(score);
 
             // DIPLAYING LEADERBOARD MODAL
-            leaderboardBtn.addEventListener('click', () => {
-                leaderboardModal.classList.remove('hidden');
-                leaderboardModal.innerHTML = score.stats;
-            });
+            leaderboardModal.classList.remove('hidden');
+
+            const leaders = JSON.parse(localStorage.getItem('Game'));
+            leaders.sort((a, b)=> b.points > a.points ? 1 : b.points < a.points ? -1 : 0);
+            
+            function displayLeaders(leaders) {
+                item.innerText = '';
+                for(const leader of leaders) {
+                    item.innerHTML += `${leader.points} words | ${leader.percentage}%<br>`;
+                    console.log(`${leader.points} words | ${leader.percentage}%`);
+                }
+            }
+
+            displayLeaders(leaders);
 
             // PICKING REACTION FOR CREATURE
             if(points <= 10) {
